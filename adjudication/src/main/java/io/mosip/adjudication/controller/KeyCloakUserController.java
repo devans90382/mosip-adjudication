@@ -23,8 +23,6 @@ public class KeyCloakUserController {
             .getAuthentication();
 
         final Principal principal = (Principal) authentication.getPrincipal();
-
-//        String dob = "";
        
         if (principal instanceof KeycloakPrincipal) {
 
