@@ -6,14 +6,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 
 @Entity
 public class Job {
-    public enum Status {
-        OPEN, WAIT, APPROVED, REJECTED;
-    }
+//    public enum Status {
+//        OPEN, WAIT, APPROVED, REJECTED;
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +27,15 @@ public class Job {
     
     @OneToOne Person secondPerson;
 
-    public User getUser() {
-        return user;
+    public Adjudicator getUser() {
+        return adjudicator;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Adjudicator adjudicator) {
+        this.adjudicator = adjudicator;
     }
 
-    @OneToOne User user;
+    @ManyToOne Adjudicator adjudicator;
 
     public Job() {
     }
@@ -80,7 +81,7 @@ public class Job {
 	@Override
 	public String toString() {
 		return "Job [id=" + id + ", status=" + status + ", firstPerson=" + firstPerson + ", secondPerson="
-				+ secondPerson + ", user=" + user + "]";
+				+ secondPerson + ", user=" + adjudicator + "]";
 	}
     
 }

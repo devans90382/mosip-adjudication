@@ -1,13 +1,17 @@
 package io.mosip.adjudication.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.mosip.adjudication.model.Job;
+import io.mosip.adjudication.model.Status;
 import io.mosip.adjudication.repository.JobRepository;
 
 @RestController
@@ -30,10 +34,10 @@ public class JobController {
     	return jobRepository.findById(job_id).get(); 
     }
 
-    @GetMapping("/user/{user_id}")
-    public List<Job> getByUserId(@PathVariable Long user_id) { 
-    	return jobRepository.findByUser_Id(user_id);
-    }
+//    @GetMapping("/user/{user_id}")
+//    public List<Job> getByUserId(@PathVariable Long user_id) { 
+//    	return jobRepository.findByUser_Id(user_id);
+//    }
 
     @GetMapping("/firstperson/{first_person_id}")
     public List<Job> getByFirstPersonId(@PathVariable Long first_person_id) { 
@@ -47,6 +51,18 @@ public class JobController {
 
     @PostMapping("/post")
     public Job addJob(@RequestBody Job job) {
-    	return jobRepository.save(job); 
+    	return jobRepository.save(job);
+    }
+    
+    @PostMapping("/update")
+    public String updateJobStatus(@RequestParam(name = "id") Long jobId, @RequestParam String status) {
+    	Job job = jobRepository.findById(jobId).get();
+    	if(job != null)
+    	{
+    		job.setStatus(Status.valueOf(status));
+    		jobRepository.save(job);
+    		return "Status updated";
+    	}
+    	return "Please check the job id";
     }
 }
