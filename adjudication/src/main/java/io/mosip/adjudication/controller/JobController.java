@@ -34,10 +34,10 @@ public class JobController {
     	return jobRepository.findById(job_id).get(); 
     }
 
-//    @GetMapping("/user/{user_id}")
-//    public List<Job> getByUserId(@PathVariable Long user_id) { 
-//    	return jobRepository.findByUser_Id(user_id);
-//    }
+    @GetMapping("/user/{user_id}")
+    public List<Job> getByUserId(@PathVariable Long user_id) {
+    	return jobRepository.findByAdjudicator_Id(user_id);
+    }
 
     @GetMapping("/firstperson/{first_person_id}")
     public List<Job> getByFirstPersonId(@PathVariable Long first_person_id) { 
