@@ -55,13 +55,17 @@ public class JobController {
     }
     
     @PostMapping("/update")
-    public String updateJobStatus(@RequestParam(name = "id") Long jobId, @RequestParam String status) {
+    public String updateJobStatus(@RequestParam(name = "id") Long jobId, @RequestParam(name = "status") String status) {
     	Job job = jobRepository.findById(jobId).get();
     	if(job != null)
     	{
-    		job.setStatus(Status.valueOf(status));
-    		jobRepository.save(job);
-    		return "Status updated";
+    		if(job.getStatus() == Status.MATCH || job.getStatus() == Status.NO_MATCH)
+    			return "Cannot update status";
+    		else {
+    			job.setStatus(Status.valueOf(status));
+        		jobRepository.save(job);
+        		return "Status updated";
+    		}
     	}
     	return "Please check the job id";
     }
