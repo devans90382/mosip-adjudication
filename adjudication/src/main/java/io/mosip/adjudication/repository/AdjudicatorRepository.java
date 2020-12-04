@@ -17,4 +17,7 @@ public interface AdjudicatorRepository extends JpaRepository<Adjudicator, Long>{
 	@Query(value = "select * from adjudicator a where a.id in (select id from adjudicator) and a.id not in (select adjudicator_id from job where adjudicator_id is not null) limit 1", nativeQuery = true)
 	Adjudicator findNewUser();
 	
+	Adjudicator findByUsername(String username);
+	
+	
 }

@@ -16,4 +16,5 @@ public interface JobRepository extends JpaRepository<Job,Long>{
     public List<Job> findByAdjudicator(Adjudicator adjudicator);
     public List<Job> findByFirstPerson(Person person);
     public List<Job> findBySecondPerson(Person person);
+//    public List<Job> findbyAdjudicator_Username(String username);
 }

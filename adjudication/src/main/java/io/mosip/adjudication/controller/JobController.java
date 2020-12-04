@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.mosip.adjudication.model.Adjudicator;
 import io.mosip.adjudication.model.Job;
 import io.mosip.adjudication.model.Status;
+import io.mosip.adjudication.repository.AdjudicatorRepository;
 import io.mosip.adjudication.repository.JobRepository;
 
 @RestController
@@ -19,9 +22,11 @@ import io.mosip.adjudication.repository.JobRepository;
 public class JobController {
 
     private JobRepository jobRepository;
+    private AdjudicatorRepository adjudicatorRepository;
     
-    public JobController(JobRepository jobRepository) {
+    public JobController(JobRepository jobRepository, AdjudicatorRepository adjudicatorRepository) {
         this.jobRepository = jobRepository;
+        this.adjudicatorRepository = adjudicatorRepository;
     }
 
     @GetMapping("/")
@@ -34,9 +39,10 @@ public class JobController {
     	return jobRepository.findById(job_id).get(); 
     }
 
-    @GetMapping("/user/{user_id}")
-    public List<Job> getByUserId(@PathVariable Long user_id) {
-    	return jobRepository.findByAdjudicator_Id(user_id);
+    @GetMapping("/user/{username}")
+    public List<Job> getByUserId(@PathVariable String username) {
+    	Adjudicator adj = adjudicatorRepository.findByUsername(username);
+    	return jobRepository.findByAdjudicator(adj);
     }
 
     @GetMapping("/firstperson/{first_person_id}")

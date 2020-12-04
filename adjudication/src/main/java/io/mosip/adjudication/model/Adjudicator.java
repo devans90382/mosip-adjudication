@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "adjudicator")
@@ -21,7 +22,7 @@ public class Adjudicator {
     @Column(name = "location")
     private String location;
     
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
     
     @OneToMany
