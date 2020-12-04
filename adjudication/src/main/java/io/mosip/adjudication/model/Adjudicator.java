@@ -18,8 +18,11 @@ public class Adjudicator {
     @GeneratedValue(strategy= GenerationType.IDENTITY) 
     private Long id;
     
-    @Column(name = "location") 
+    @Column(name = "location")
     private String location;
+    
+    @Column(name = "username")
+    private String username;
     
     @OneToMany
     private List<Job> assignedJobs;
@@ -45,6 +48,14 @@ public class Adjudicator {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	@Override
