@@ -22,8 +22,8 @@ public class Adjudicator {
     @Column(name = "location")
     private String location;
     
-    @Column(name = "username", unique = true)
-    private String username;
+    @Column(name = "user_name", unique = true)
+    private String userName;
     
     @OneToMany
     private List<Job> assignedJobs;
@@ -52,11 +52,11 @@ public class Adjudicator {
 	}
 
 	public String getUsername() {
-		return username;
+		return userName;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.userName = username;
 	}
 
 	@Override

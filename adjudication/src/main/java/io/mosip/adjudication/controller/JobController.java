@@ -39,9 +39,9 @@ public class JobController {
     	return jobRepository.findById(job_id).get(); 
     }
 
-    @GetMapping("/user/{username}")
-    public List<Job> getByUserId(@PathVariable String username) {
-    	Adjudicator adj = adjudicatorRepository.findByUsername(username);
+    @GetMapping("/user")
+    public List<Job> getByUserId(@RequestParam(name = "username") String username) {
+    	Adjudicator adj = adjudicatorRepository.findByUserName(username);
     	return jobRepository.findByAdjudicator(adj);
     }
 

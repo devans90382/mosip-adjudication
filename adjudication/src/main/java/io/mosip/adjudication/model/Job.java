@@ -81,7 +81,7 @@ public class Job {
 	@Override
 	public String toString() {
 		return "Job [id=" + id + ", status=" + status + ", firstPerson=" + firstPerson + ", secondPerson="
-				+ secondPerson + ", user=" + adjudicator + "]";
+				+ secondPerson + ", adj=" + adjudicator + "]";
 	}
     
 }
