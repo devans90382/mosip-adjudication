@@ -1,37 +1,49 @@
 package io.mosip.adjudication.controller;
 
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import io.mosip.adjudication.model.User;
-import io.mosip.adjudication.repository.UserRepository;
+import io.mosip.adjudication.model.Adjudicator;
+import io.mosip.adjudication.repository.AdjudicatorRepository;
 
 @RestController
 @RequestMapping("/api/user")
-public class UserController {
+public class AdjudicatorController {
 
-private final UserRepository userRepository;
+private final AdjudicatorRepository adjudicatorRepository;
 	
-	public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+	public AdjudicatorController(AdjudicatorRepository adjudicatorRepository) {
+        this.adjudicatorRepository = adjudicatorRepository;
     }
 	
 	@GetMapping("/")
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<Adjudicator> getAll() {
+        return adjudicatorRepository.findAll();
     }
 
     @GetMapping("/{user_id}")
-    public User getById(@PathVariable Long user_id) {
-    	return userRepository.findById(user_id).get(); 
+    public Adjudicator getById(@PathVariable String username) {
+    	return adjudicatorRepository.findById(username).get();
     }
 
     @PostMapping("/post")
-    public User addUser(@RequestBody User user) {
-    	return userRepository.save(user); 
+    public Adjudicator addUser(@RequestBody Adjudicator adjudicator) {
+    	return adjudicatorRepository.save(adjudicator);
+    }
+    
+    @PostMapping("/update")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void changeStatus(@RequestParam(name = "username") String adjName, @RequestParam(name = "online") boolean on) {
+    	Adjudicator adjudicator = adjudicatorRepository.findById(adjName).get();
+    	adjudicator.setOnline(on);
+    	adjudicatorRepository.save(adjudicator);
     }
 }

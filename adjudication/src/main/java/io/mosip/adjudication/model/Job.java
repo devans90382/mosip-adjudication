@@ -1,19 +1,25 @@
 package io.mosip.adjudication.model;
 
+import java.sql.Timestamp;
+import java.util.List;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
 @Entity
 public class Job {
-    public enum Status {
-        OPEN, WAIT, APPROVED, REJECTED;
-    }
+//    public enum Status {
+//        OPEN, WAIT, APPROVED, REJECTED;
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,62 +31,92 @@ public class Job {
     @OneToOne Person firstPerson;
     
     @OneToOne Person secondPerson;
+    
+    @Column
+	private Timestamp created_at;
+    
+    @OneToMany
+    private List<Comment> comment;
 
-    public User getUser() {
-        return user;
-    }
+    @ManyToOne Adjudicator adjudicator;
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    @OneToOne User user;
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Job() {
-    }
+	public Status getStatus() {
+		return status;
+	}
 
-    public Job(Status status, Person firstPerson, Person secondPerson) {
-        this.status = status;
-        this.firstPerson = firstPerson;
-        this.secondPerson = secondPerson;
-    }
+	public void setStatus(Status status) {
+		this.status = status;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Person getFirstPerson() {
+		return firstPerson;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setFirstPerson(Person firstPerson) {
+		this.firstPerson = firstPerson;
+	}
 
-    public Status getStatus() {
-        return status;
-    }
+	public Person getSecondPerson() {
+		return secondPerson;
+	}
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
+	public void setSecondPerson(Person secondPerson) {
+		this.secondPerson = secondPerson;
+	}
 
-    public Person getFirstPerson() {
-        return firstPerson;
-    }
+	public Timestamp getCreated_at() {
+		return created_at;
+	}
 
-    public void setFirstPerson(Person firstPerson) {
-        this.firstPerson = firstPerson;
-    }
+	public void setCreated_at(Timestamp created_at) {
+		this.created_at = created_at;
+	}
 
-    public Person getSecondPerson() {
-        return secondPerson;
-    }
+	
 
-    public void setSecondPerson(Person secondPerson) {
-        this.secondPerson = secondPerson;
-    }
+	public Adjudicator getAdjudicator() {
+		return adjudicator;
+	}
+
+	public void setAdjudicator(Adjudicator adjudicator) {
+		this.adjudicator = adjudicator;
+	}
+
+	public Job() {
+		super();
+	}
+
+	public List<Comment> getComment() {
+		return comment;
+	}
+
+	public void setComment(List<Comment> comment) {
+		this.comment = comment;
+	}
+
+	public Job(Status status, Person firstPerson, Person secondPerson, Timestamp created_at, List<Comment> comment,
+			Adjudicator adjudicator) {
+		super();
+		this.status = status;
+		this.firstPerson = firstPerson;
+		this.secondPerson = secondPerson;
+		this.created_at = created_at;
+		this.comment = comment;
+		this.adjudicator = adjudicator;
+	}
 
 	@Override
 	public String toString() {
 		return "Job [id=" + id + ", status=" + status + ", firstPerson=" + firstPerson + ", secondPerson="
-				+ secondPerson + ", user=" + user + "]";
+				+ secondPerson + ", created_at=" + created_at + ", comment=" + comment + ", adjudicator=" + adjudicator
+				+ "]";
 	}
-    
 }
