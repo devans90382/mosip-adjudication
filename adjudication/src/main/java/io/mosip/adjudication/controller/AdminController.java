@@ -32,7 +32,7 @@ public class AdminController {
 	}
 	
 	@PostMapping("/reassign")
-	public String reassignJob(@RequestBody Job job) {
+	public Long reassignJob(@RequestBody Job job) {
 		return adminService.getNewAdjudicator(job.getId());
 	}
 }

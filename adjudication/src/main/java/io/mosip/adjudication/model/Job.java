@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
 public class Job {
@@ -33,6 +35,7 @@ public class Job {
     @OneToOne Person secondPerson;
     
     @Column
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "E, dd MMM yyyy HH:mm:ss z", timezone = "GMT+2")
 	private Timestamp created_at;
     
     @OneToMany

@@ -34,18 +34,18 @@ public class AdminService {
 		return jobRepository.findAll();
 	}
 
-	public String getNewAdjudicator(Long id) {
+	public Long getNewAdjudicator(Long id) {
 		List<Adjudicator> allAdjudicators = adjudicatorRepository.findAll();
 		List<Adjudicator> allOnlineAdjudicators = new ArrayList<>();
-		String currentUser = jobRepository.findById(id).orElse(null).getAdjudicator().getUsername();
+		Long currentUser = jobRepository.findById(id).orElse(null).getAdjudicator().getId();
 		for(Adjudicator a : allAdjudicators) {
 			if(a.isOnline()) {
-				if(a.getUsername().equals(currentUser)) {
+				if(a.getId() == currentUser) {
 					continue;
 				}
 				allOnlineAdjudicators.add(a);
 			}
 		}
-		return allOnlineAdjudicators.get(new Random().nextInt(allOnlineAdjudicators.size())).getUsername();
+		return allOnlineAdjudicators.get(new Random().nextInt(allOnlineAdjudicators.size())).getId();
 	}	
 }

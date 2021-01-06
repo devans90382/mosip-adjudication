@@ -29,9 +29,9 @@ private final AdjudicatorRepository adjudicatorRepository;
         return adjudicatorRepository.findAll();
     }
 
-    @GetMapping("/{user_id}")
-    public Adjudicator getById(@PathVariable String username) {
-    	return adjudicatorRepository.findById(username).get();
+	@GetMapping("/{user_id}")
+    public Adjudicator getById(@PathVariable Long user_id) {
+    	return adjudicatorRepository.findById(user_id).get();
     }
 
     @PostMapping("/post")
@@ -41,8 +41,8 @@ private final AdjudicatorRepository adjudicatorRepository;
     
     @PostMapping("/update")
     @ResponseStatus(value = HttpStatus.OK)
-    public void changeStatus(@RequestParam(name = "username") String adjName, @RequestParam(name = "online") boolean on) {
-    	Adjudicator adjudicator = adjudicatorRepository.findById(adjName).get();
+    public void changeStatus(@RequestParam(name = "id") Long user_id, @RequestParam(name = "online") boolean on) {
+    	Adjudicator adjudicator = adjudicatorRepository.findById(user_id).get();
     	adjudicator.setOnline(on);
     	adjudicatorRepository.save(adjudicator);
     }

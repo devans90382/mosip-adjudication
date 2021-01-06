@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -12,12 +14,15 @@ import javax.persistence.Table;
 @Table(name = "adjudicator")
 public class Adjudicator {
 	
-    @Id
-    @Column(unique = true)
-    private String username;
+	@Id 
+    @GeneratedValue(strategy= GenerationType.IDENTITY) 
+    private Long id;
     
-    @Column(name = "Location") 
+    @Column(name = "location")
     private String location;
+    
+    @Column(name = "user_name", unique = true)
+    private String userName;
     
     @Column(name = "isOnline")
     private boolean online;
@@ -28,24 +33,27 @@ public class Adjudicator {
     public Adjudicator() {
     
     }
+
+    public Adjudicator(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     
-    public Adjudicator(String username) {
-		this.username = username;
-	}
-	
-	public Adjudicator(String location, boolean online) {
-		super();
-		this.location = location;
-		this.online = online;
+    public String getUserName() {
+		return userName;
 	}
 
-	public String getUsername() {
-		return username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	public void setId(Long id) {
+        this.id = id;
+    }
 
 	public boolean isOnline() {
 		return online;
@@ -65,7 +73,7 @@ public class Adjudicator {
 
 	@Override
 	public String toString() {
-		return "Adjudicator [username=" + username + ", location=" + location + ", online=" + online + ", assignedJobs="
-				+ assignedJobs + "]";
+		return "Adjudicator [id=" + id + ", location=" + location + ", userName=" + userName + ", online=" + online
+				+ ", assignedJobs=" + assignedJobs + "]";
 	}
 }

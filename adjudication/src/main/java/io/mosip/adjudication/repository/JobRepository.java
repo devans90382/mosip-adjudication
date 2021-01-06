@@ -10,7 +10,7 @@ import io.mosip.adjudication.model.Adjudicator;
 
 @Repository
 public interface JobRepository extends JpaRepository<Job,Long>{
-	public List<Job> findByAdjudicator_Username(String username);
+	public List<Job> findByAdjudicator_Id(Long id);
     public List<Job> findByFirstPerson_Id(Long id);
     public List<Job> findBySecondPerson_Id(Long id);
     public List<Job> findByAdjudicator(Adjudicator adjudicator);
